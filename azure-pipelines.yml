@@ -1,3 +1,4 @@
+
 name: spring-pet-clinic
 
 trigger:
@@ -6,5 +7,9 @@ trigger:
 pool: Default
 
 steps:
-  - script: ./mvnw clean package
-
+  - task: Maven@4
+    displayName: Maven Build
+    inputs:
+      mavenPOMFile: 'pom.xml'
+      goals: 'package'
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
