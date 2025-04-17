@@ -16,6 +16,9 @@ parameters:
       - 'package' 
       - clean package
       - install
+variables:
+  testResultsFiles: '**/surefire-reports/TEST-*.xml' 
+  package-glob: '**/spring-pet-clinic-*.jar'  
 
 steps:
   - task: Maven@4
