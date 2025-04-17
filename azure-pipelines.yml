@@ -6,6 +6,17 @@ trigger:
 
 pool: Default
 
+
+parameters:
+  - name: goal
+    displayName: Maven Goal 
+    type: string
+    default: 'package'
+    values:
+      - 'package' 
+      - clean package
+      - install
+
 steps:
   - task: Maven@4
     displayName: Maven Build
