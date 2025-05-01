@@ -1,0 +1,6 @@
+sonar.projectKey= anukaran007_spring-pet-clinic
+sonar.organization= anukaran007
+sonar.host.url=https://sonarcloud.io
+sonar.sources=.
+
+
