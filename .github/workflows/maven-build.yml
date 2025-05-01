@@ -27,3 +27,11 @@ jobs:
           cache: maven
       - name: Build with Maven Wrapper
         run: ./mvnw -B verify
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarqube-scan-action@v5.1.0
+        with:
+        organization: anukaran007
+        projectKey: spring-petclinic
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
