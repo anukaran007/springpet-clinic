@@ -34,6 +34,6 @@ jobs:
         with:
           organization: anukaran007
           projectKey: anukaran007_spring-pet-clinic
-          projectName: spring-pet-clinic
+          projectBaseDir: .
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
