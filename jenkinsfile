@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        MAVEN_HOME = tool "Maven3"
+        MAVEN_HOME = tool "MAVEN_HOME"
         SONAR_CLOUD = 'sonarQube-server'   // must match the name you set in Jenkins → Configure System → SonarQube
     }
 
