@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+
+    environment {
+        MAVEN_HOME = tool "Maven3"
+        SONAR_CLOUD = 'sonarQube-server'   // must match the name you set in Jenkins → Configure System → SonarQube
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/anukaran007/springpet-clinic.git'
+            }
+        }
+
+        stage('Build & Test') {
+            when { branch 'main' }
+            steps {
+                sh "${MAVEN_HOME}/bin/mvn clean test"
+            }
+        }
+
+        stage('Package') {
+            when { branch 'main' }
+            steps {
+                sh "${MAVEN_HOME}/bin/mvn package -DskipTests"
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            when { branch 'main' }
+            steps {
+                withSonarQubeEnv("${SONAR_CLOUD}") {
+                    sh "${MAVEN_HOME}/bin/mvn sonar:sonar"
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            when { branch 'main' }
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Cleaning workspace..."
+            cleanWs()
+        }
+        success {
+            echo "✅ Pipeline completed successfully on main branch!"
+        }
+        failure {
+            echo "❌ Pipeline failed. Check logs."
+        }
+    }
+}
