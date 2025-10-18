@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2019 the original author or authors.
+ * Copyright 2012-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.xml.bind.annotation.XmlElement;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Simple JavaBean domain object representing a veterinarian.
@@ -47,7 +48,7 @@ public class Vet extends Person {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),
 			inverseJoinColumns = @JoinColumn(name = "specialty_id"))
-	private Set<Specialty> specialties;
+	private @Nullable Set<Specialty> specialties;
 
 	protected Set<Specialty> getSpecialtiesInternal() {
 		if (this.specialties == null) {
