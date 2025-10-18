@@ -8,7 +8,7 @@ pool: Default
 
 
 parameters:
-  - name: goalss
+  - name: goalsss
     displayName: Maven Goal 
     type: string
     default: 'package'
