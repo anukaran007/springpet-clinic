@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    triggers {
+        // This listens for GitHub webhook events
+        githubPush()
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -11,7 +16,7 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                sh './mvnw clean install'
+                sh './mvnw clean'
             }
         }
     }
