@@ -17,7 +17,7 @@ pipeline {
         stage('Build & Test') {
             steps {
                 // Build and test using Maven wrapper
-                sh './mvnw clean install -U'
+                sh './mvnw clean'
             }
         }
     }
