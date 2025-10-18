@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    // Trigger the pipeline on GitHub push events
+    // Trigger on GitHub push
     triggers {
         githubPush()
     }
@@ -9,14 +9,16 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Replace credentialsId with the ID you set for your PAT
                 git branch: 'main',
-                    url: 'https://github.com/spring-projects/spring-petclinic.git'
+                    url: 'https://github.com/anukaran007/spring-petclinic.git',
+                    credentialsId: 'github-pat-anukaran007'
             }
         }
 
         stage('Build & Test') {
             steps {
-                // Build and test using Maven wrapper
+                // Build and test using Maven wrapper, forcing dependency updates
                 sh './mvnw clean'
             }
         }
@@ -24,7 +26,7 @@ pipeline {
 
     post {
         always {
-            echo "Cleaning workspace.."
+            echo "Cleaning workspace..."
             cleanWs()
         }
 
