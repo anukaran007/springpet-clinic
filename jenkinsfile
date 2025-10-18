@@ -1,8 +1,8 @@
 pipeline {
     agent any
 
+    // Trigger the pipeline on GitHub push events
     triggers {
-        // This listens for GitHub webhook events
         githubPush()
     }
 
@@ -16,7 +16,8 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                sh './mvnw clean'
+                // Build and test using Maven wrapper
+                sh './mvnw clean install -U'
             }
         }
     }
@@ -25,6 +26,14 @@ pipeline {
         always {
             echo "Cleaning workspace..."
             cleanWs()
+        }
+
+        success {
+            echo "Build succeeded! ✅"
+        }
+
+        failure {
+            echo "Build failed! ❌"
         }
     }
 }
